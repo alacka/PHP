@@ -1,0 +1,25 @@
+RewriteEngine On
+# правило срабатывает если переменная FINISH пустая
+RewriteCond %{ENV:REDIRECT_FINISH} ^$
+# и если файл действительно есть
+RewriteCond %{REQUEST_FILENAME} -f
+# и если это php скрипт
+RewriteCond %{REQUEST_URI} ^(.+)\.php$
+RewriteRule .* %1/ [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)/$ $1.php [L,E=FINISH:1]
+
+
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)/$ $1/ [L,R=301]
+
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !\..{1,10}$
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)$ http://new.chexsystemsrelief.com/newsite/$1/ [L,R=301]
